@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EventVerse AI — Enterprise Event Command Center</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Layer 3: Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="min-h-screen">
+
+<!-- ===== HEADER ===== -->
+<header class="border-b border-gray-800 px-4 py-4">
+  <div class="max-w-7xl mx-auto flex items-center gap-4">
+    <div>
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+      </div>
+    </div>
+    <div>
+      <h1 class="text-xl font-bold glow-text" style="background:linear-gradient(90deg,#a5b4fc,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">EventVerse AI</h1>
+      <p class="text-xs text-gray-500">Enterprise Event Command Center — 3-Layer Architecture</p>
+    </div>
+    <div class="ml-auto flex items-center gap-3">
+      <div class="pulse w-2 h-2 rounded-full bg-green-500"></div>
+      <span class="text-xs text-gray-400">System Online</span>
+    </div>
+  </div>
+</header>
+
+<!-- ===== NAV TABS ===== -->
+<nav class="border-b border-gray-800 px-4">
+  <div class="max-w-7xl mx-auto flex gap-1 overflow-x-auto py-2">
+    <button class="tab-btn active px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap" onclick="switchTab('concept',this)">🎨 Concept &amp; Inspo</button>
+    <button class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap" onclick="switchTab('venue',this)">🏟️ Smart Venue</button>
+    <button class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap" onclick="switchTab('budget',this)">💰 Budgeting</button>
+    <button class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap" onclick="switchTab('crisis',this)">🚨 Crisis Room</button>
+    <button class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap" onclick="switchTab('database',this)">🗄️ Event Records</button>
+  </div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-4 py-6">
+
+<!-- ============================= TAB 1: CONCEPT ============================= -->
+<div id="tab-concept" class="tab-content active">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- Input Panel -->
+    <div class="card p-5">
+      <p class="section-title">🎭 Creative Input</p>
+      <div class="space-y-4">
+        <div>
+          <label class="text-xs text-gray-400 mb-1 block">Nama Event</label>
+          <input id="ev-name" class="input-dark" placeholder="e.g. Neon Soundwave Festival 2026" />
+        </div>
+        <div>
+          <label class="text-xs text-gray-400 mb-1 block">Tema Utama</label>
+          <select id="ev-theme" class="input-dark">
+            <option value="">-- Pilih Tema --</option>
+            <option value="cyberpunk">Cyberpunk Neon</option>
+            <option value="tropical">Tropical Paradise</option>
+            <option value="royal">Royal Elegance</option>
+            <option value="retro">Retro Wave 80s</option>
+            <option value="minimalist">Nordic Minimalist</option>
+            <option value="bohemian">Bohemian Earth</option>
+            <option value="futuristic">Galactic Futuristic</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs text-gray-400 mb-1 block">Genre Musik / Acara</label>
+          <select id="ev-genre" class="input-dark">
+            <option value="">-- Pilih Genre --</option>
+            <option value="EDM">EDM / Electronic</option>
+            <option value="Jazz">Jazz &amp; Lounge</option>
+            <option value="Pop">Pop / Indie</option>
+            <option value="Rock">Rock / Metal</option>
+            <option value="Classical">Classical / Orchestra</option>
+            <option value="Corporate">Corporate / Seminar</option>
+            <option value="Wedding">Wedding / Gala</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs text-gray-400 mb-1 block">Tanggal Event</label>
+          <input id="ev-date" class="input-dark" type="date" />
+        </div>
+        <div>
+          <label class="text-xs text-gray-400 mb-1 block">Target Audiens</label>
+          <input id="ev-audience" class="input-dark" placeholder="e.g. Usia 18-35, musik lovers" />
+        </div>
+        <button class="btn-primary w-full" onclick="generateConcept()">✨ Generate Concept</button>
+      </div>
+    </div>
+
+    <!-- Palette & Dresscode Output -->
+    <div class="card p-5">
+      <p class="section-title">🎨 Color Palette &amp; Dresscode</p>
+      <div id="palette-output">
+        <div class="text-gray-500 text-sm text-center py-8">Generate concept untuk melihat palet warna</div>
+      </div>
+      <hr class="border-gray-800 my-4" />
+      <p class="section-title">👗 Dresscode Guide</p>
+      <div id="dresscode-output">
+        <div class="text-gray-500 text-sm text-center py-4">—</div>
+      </div>
+    </div>
+
+    <!-- Lighting & Decoration Output -->
+    <div class="card p-5">
+      <p class="section-title">💡 Lighting &amp; Dekorasi</p>
+      <div id="lighting-output">
+        <div class="text-gray-500 text-sm text-center py-8">Generate concept untuk melihat rekomendasi</div>
+      </div>
+      <hr class="border-gray-800 my-4" />
+      <p class="section-title">🌟 Concept Summary</p>
+      <div id="concept-summary" class="text-sm text-gray-400">—</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================= TAB 2: VENUE ============================= -->
+<div id="tab-venue" class="tab-content">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- Venue Selector -->
+    <div class="card p-5">
+      <p class="section-title">🏟️ Pilih Venue</p>
+      <div class="space-y-3">
+        <div>
+          <label class="text-xs text-gray-400 mb-1 block">Kota</label>
+          <select id="venue-city" class="input-dark" onchange="filterVenuesByCity()">
+            <option value="">-- Semua Kota --</option>
+            <option value="Yogyakarta">Yogyakarta</option>
+            <option value="Jakarta">Jakarta</option>
+            <option value="Bandung">Bandung</option>
+            <option value="Surabaya">Surabaya</option>
+            <option value="Bali">Bali</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs text-gray-400 mb-1 block">Venue</label>
+          <select id="venue-select" class="input-dark" onchange="loadVenueDetails()"></select>
+        </div>
+        <div>
+          <label class="text-xs text-gray-400 mb-1 block">Target Pengunjung</label>
+          <input id="venue-target" class="input-dark" type="number" placeholder="e.g. 2000" oninput="checkCapacity()" />
+        </div>
+        <div id="capacity-alert"></div>
+
+        <div id="venue-info-card" class="hidden">
+          <div class="bg-gray-900 rounded-xl p-4 space-y-2 text-sm">
+            <div class="flex justify-between"><span class="text-gray-400">Venue</span><span id="vi-name" class="font-bold text-indigo-300"></span></div>
+            <div class="flex justify-between"><span class="text-gray-400">Kota</span><span id="vi-city"></span></div>
+            <div class="flex justify-between"><span class="text-gray-400">Kapasitas Resmi</span><span id="vi-cap" class="font-bold text-green-400"></span></div>
+            <div class="flex justify-between"><span class="text-gray-400">Kategori</span><span id="vi-cat"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Custom Venue -->
+      <hr class="border-gray-800 my-4" />
+      <p class="section-title">➕ Tambah Venue Custom</p>
+      <div class="space-y-2">
+        <input id="new-venue-name" class="input-dark" placeholder="Nama Venue" />
+        <input id="new-venue-city" class="input-dark" placeholder="Kota" />
+        <input id="new-venue-cap" class="input-dark" type="number" placeholder="Kapasitas" />
+        <select id="new-venue-cat" class="input-dark">
+          <option value="indoor">Indoor</option>
+          <option value="outdoor">Outdoor</option>
+          <option value="semi-outdoor">Semi-Outdoor</option>
+        </select>
+        <button class="btn-ok w-full text-sm" onclick="addCustomVenue()">💾 Simpan ke LocalStorage</button>
+      </div>
+    </div>
+
+    <!-- Blueprint SVG -->
+    <div class="card p-5 lg:col-span-2">
+      <p class="section-title">📐 Floor Plan Blueprint — SVG 2D Interactive</p>
+      <div class="overflow-auto">
+        <svg id="blueprint-svg" viewBox="0 0 700 460" width="100%" style="background:#0a0d14;border-radius:10px;border:1px solid #1f2937">
+          <defs>
+            <pattern id="grid" width="35" height="35" patternUnits="userSpaceOnUse">
+              <path d="M 35 0 L 0 0 0 35" fill="none" stroke="#1a2035" stroke-width="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="700" height="460" fill="url(#grid)" />
+          <rect x="30" y="20" width="640" height="420" rx="8" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="6 3" />
+          <text x="350" y="14" text-anchor="middle" font-size="11" fill="#475569">BATAS AREA VENUE</text>
+          <!-- MAIN STAGE -->
+          <rect x="240" y="40" width="220" height="100" rx="6" fill="#1e1b4b" stroke="#818cf8" stroke-width="2" />
+          <text x="350" y="85" text-anchor="middle" font-size="14" fill="#a5b4fc" font-weight="bold">🎤 MAIN STAGE</text>
+          <text x="350" y="103" text-anchor="middle" font-size="10" fill="#6366f1">220m × 100m</text>
+          <!-- FOH -->
+          <rect x="280" y="165" width="140" height="60" rx="6" fill="#1a2e1a" stroke="#4ade80" stroke-width="1.5" />
+          <text x="350" y="191" text-anchor="middle" font-size="11" fill="#4ade80" font-weight="bold">🎚️ FOH MIXING</text>
+          <text x="350" y="207" text-anchor="middle" font-size="9" fill="#6b7280">Front of House</text>
+          <!-- BARIKADE -->
+          <rect x="210" y="148" width="280" height="12" rx="4" fill="#3b1515" stroke="#ef4444" stroke-width="1.5" />
+          <text x="350" y="158" text-anchor="middle" font-size="9" fill="#ef4444" font-weight="bold">━━ BARIKADE ━━</text>
+          <!-- CROWD AREA -->
+          <rect x="120" y="240" width="460" height="130" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1" />
+          <text x="350" y="295" text-anchor="middle" font-size="13" fill="#94a3b8" font-weight="bold">👥 CROWD AREA</text>
+          <text x="350" y="313" text-anchor="middle" font-size="10" fill="#475569">Zona penonton utama</text>
+          <!-- GATE A -->
+          <rect x="30" y="340" width="60" height="70" rx="4" fill="#14532d" stroke="#4ade80" stroke-width="1.5" />
+          <text x="60" y="372" text-anchor="middle" font-size="10" fill="#4ade80" font-weight="bold">🚪</text>
+          <text x="60" y="386" text-anchor="middle" font-size="9" fill="#4ade80">GATE A</text>
+          <text x="60" y="399" text-anchor="middle" font-size="8" fill="#6b7280">Masuk</text>
+          <!-- GATE B -->
+          <rect x="610" y="340" width="60" height="70" rx="4" fill="#14532d" stroke="#4ade80" stroke-width="1.5" />
+          <text x="640" y="372" text-anchor="middle" font-size="10" fill="#4ade80" font-weight="bold">🚪</text>
+          <text x="640" y="386" text-anchor="middle" font-size="9" fill="#4ade80">GATE B</text>
+          <text x="640" y="399" text-anchor="middle" font-size="8" fill="#6b7280">Keluar</text>
+          <!-- EVAKUASI KIRI -->
+          <path d="M30 270 L90 270 L90 330" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5 3" />
+          <polygon points="30,270 38,264 38,276" fill="#fbbf24" />
+          <text x="60" y="265" text-anchor="middle" font-size="8" fill="#fbbf24">EVAKUASI</text>
+          <!-- EVAKUASI KANAN -->
+          <path d="M670 270 L610 270 L610 330" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5 3" />
+          <polygon points="670,270 662,264 662,276" fill="#fbbf24" />
+          <text x="640" y="265" text-anchor="middle" font-size="8" fill="#fbbf24">EVAKUASI</text>
+          <!-- POS MEDIS KIRI -->
+          <rect x="32" y="160" width="80" height="55" rx="4" fill="#1a0c0c" stroke="#ef4444" stroke-width="1.5" />
+          <text x="72" y="182" text-anchor="middle" font-size="18" fill="#ef4444">🏥</text>
+          <text x="72" y="200" text-anchor="middle" font-size="9" fill="#ef4444" font-weight="bold">POS MEDIS</text>
+          <text x="72" y="211" text-anchor="middle" font-size="8" fill="#6b7280">Unit A</text>
+          <!-- POS MEDIS KANAN -->
+          <rect x="588" y="160" width="80" height="55" rx="4" fill="#1a0c0c" stroke="#ef4444" stroke-width="1.5" />
+          <text x="628" y="182" text-anchor="middle" font-size="18" fill="#ef4444">🏥</text>
+          <text x="628" y="200" text-anchor="middle" font-size="9" fill="#ef4444" font-weight="bold">POS MEDIS</text>
+          <text x="628" y="211" text-anchor="middle" font-size="8" fill="#6b7280">Unit B</text>
+          <!-- SOUND TOWERS -->
+          <rect x="130" y="60" width="50" height="90" rx="4" fill="#1c1c2e" stroke="#6366f1" stroke-width="1" />
+          <text x="155" y="102" text-anchor="middle" font-size="10" fill="#818cf8">📡</text>
+          <text x="155" y="120" text-anchor="middle" font-size="8" fill="#6366f1">TOWER L</text>
+          <rect x="520" y="60" width="50" height="90" rx="4" fill="#1c1c2e" stroke="#6366f1" stroke-width="1" />
+          <text x="545" y="102" text-anchor="middle" font-size="10" fill="#818cf8">📡</text>
+          <text x="545" y="120" text-anchor="middle" font-size="8" fill="#6366f1">TOWER R</text>
+          <!-- MERCH & SPONSOR -->
+          <rect x="120" y="385" width="200" height="50" rx="4" fill="#1c1a0c" stroke="#fbbf24" stroke-width="1" />
+          <text x="220" y="407" text-anchor="middle" font-size="10" fill="#fbbf24">🛍️ MERCH &amp; FOOD</text>
+          <text x="220" y="422" text-anchor="middle" font-size="8" fill="#6b7280">Zona Komersial</text>
+          <rect x="380" y="385" width="200" height="50" rx="4" fill="#1c0c2c" stroke="#a78bfa" stroke-width="1" />
+          <text x="480" y="407" text-anchor="middle" font-size="10" fill="#a78bfa">🎯 SPONSOR ZONE</text>
+          <text x="480" y="422" text-anchor="middle" font-size="8" fill="#6b7280">Aktivasi Brand</text>
+          <!-- LEGEND -->
+          <rect x="32" y="432" width="10" height="10" fill="#818cf8" />
+          <text x="46" y="441" font-size="8" fill="#9ca3af">Stage/FOH</text>
+          <rect x="100" y="432" width="10" height="10" fill="#ef4444" />
+          <text x="114" y="441" font-size="8" fill="#9ca3af">Barikade/Medis</text>
+          <rect x="200" y="432" width="10" height="10" fill="#4ade80" />
+          <text x="214" y="441" font-size="8" fill="#9ca3af">Gate</text>
+          <rect x="260" y="432" width="10" height="10" fill="#fbbf24" />
+          <text x="274" y="441" font-size="8" fill="#9ca3af">Evakuasi</text>
+          <rect x="340" y="432" width="10" height="10" fill="#a78bfa" />
+          <text x="354" y="441" font-size="8" fill="#9ca3af">Komersial</text>
+          <!-- CAPACITY TEXT -->
+          <text id="bp-capacity-text" x="670" y="45" text-anchor="end" font-size="11" fill="#6b7280">Pilih Venue</text>
+        </svg>
+      </div>
+      <div class="mt-3 grid grid-cols-3 gap-3">
+        <div class="stat-box"><div class="text-xs text-gray-500">Main Stage</div><div class="font-bold text-indigo-300">220m²</div></div>
+        <div class="stat-box"><div class="text-xs text-gray-500">Crowd Zone</div><div class="font-bold text-blue-300">460m²</div></div>
+        <div class="stat-box"><div class="text-xs text-gray-500">Pintu Darurat</div><div class="font-bold text-yellow-300">4 Jalur</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Venue List Table -->
+  <div class="card p-5 mt-6">
+    <p class="section-title">📋 Daftar Semua Venue</p>
+    <div class="db-row db-header">
+      <span>ID</span><span>Nama Venue</span><span>Kota</span><span>Kapasitas</span><span>Kategori</span><span>Aksi</span>
+    </div>
+    <div id="venue-list-table"></div>
+  </div>
+</div>
+
+<!-- ============================= TAB 3: BUDGET ============================= -->
+<div id="tab-budget" class="tab-content">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <!-- Input -->
+    <div class="card p-5">
+      <p class="section-title">💰 Financial Inputs</p>
+      <div class="space-y-3">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-xs text-gray-400 mb-1 block">Harga Tiket Reguler (Rp)</label>
+            <input id="b-ticket-price" class="input-dark" type="number" placeholder="150000" />
+          </div>
+          <div>
+            <label class="text-xs text-gray-400 mb-1 block">Harga Tiket VIP (Rp)</label>
+            <input id="b-vip-price" class="input-dark" type="number" placeholder="500000" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="text-xs text-gray-400 mb-1 block">Estimasi Tiket Reguler Terjual</label>
+            <input id="b-ticket-sold" class="input-dark" type="number" placeholder="2000" />
+          </div>
+          <div>
+            <label class="text-xs text-gray-400 mb-1 block">Estimasi Tiket VIP Terjual</label>
+            <input id="b-vip-sold" class="input-dark" type="number" placeholder="200" />
+          </div>
+        </div>
+        <div>
+          <label class="text-xs text-gray-400 mb-1 block">Pendapatan Sponsor (Rp)</label>
+          <input id="b-sponsor" class="input-dark" type="number" placeholder="50000000" />
+        </div>
+        <hr class="border-gray-800" />
+        <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">Pengeluaran</p>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="text-xs text-gray-400 mb-1 block">Sewa Venue (Rp)</label><input id="b-venue-cost" class="input-dark" type="number" placeholder="25000000" /></div>
+          <div><label class="text-xs text-gray-400 mb-1 block">Artis / Talent (Rp)</label><input id="b-artist-cost" class="input-dark" type="number" placeholder="80000000" /></div>
+          <div><label class="text-xs text-gray-400 mb-1 block">Sound &amp; Lighting (Rp)</label><input id="b-sound-cost" class="input-dark" type="number" placeholder="30000000" /></div>
+          <div><label class="text-xs text-gray-400 mb-1 block">Marketing (Rp)</label><input id="b-marketing-cost" class="input-dark" type="number" placeholder="15000000" /></div>
+          <div><label class="text-xs text-gray-400 mb-1 block">Keamanan (Rp)</label><input id="b-security-cost" class="input-dark" type="number" placeholder="10000000" /></div>
+          <div><label class="text-xs text-gray-400 mb-1 block">Operasional Lain (Rp)</label><input id="b-other-cost" class="input-dark" type="number" placeholder="8000000" /></div>
+        </div>
+        <button class="btn-primary w-full" onclick="calculateBudget()">📊 Hitung Finansial</button>
+      </div>
+    </div>
+
+    <!-- Output -->
+    <div class="card p-5">
+      <p class="section-title">📊 Financial Dashboard</p>
+      <div id="budget-output">
+        <div class="text-gray-500 text-sm text-center py-12">Isi input &amp; klik Hitung Finansial</div>
+      </div>
+      <div id="bep-section" class="hidden mt-4">
+        <hr class="border-gray-800 mb-4" />
+        <p class="section-title">📈 Break-Even Visualizer</p>
+        <div id="bep-chart"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================= TAB 4: CRISIS ============================= -->
+<div id="tab-crisis" class="tab-content">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- Incident Triggers -->
+    <div class="card p-5">
+      <p class="section-title">⚡ Trigger Insiden Cepat</p>
+      <p class="text-xs text-gray-500 mb-4">Tekan tombol untuk mensimulasikan skenario darurat</p>
+      <div class="flex flex-col gap-3">
+        <button class="crisis-btn btn-danger" onclick="triggerCrisis('crowd_crush')">💥 Crowd Crush / Desakan Massa</button>
+        <button class="crisis-btn btn-danger" onclick="triggerCrisis('fire')">🔥 Kebakaran Area Event</button>
+        <button class="crisis-btn btn-warn" onclick="triggerCrisis('power_outage')">⚡ Pemadaman Listrik Total</button>
+        <button class="crisis-btn btn-warn" onclick="triggerCrisis('storm')">🌧️ Cuaca Ekstrem / Hujan Badai</button>
+        <button class="crisis-btn btn-warn" onclick="triggerCrisis('medical')">🏥 Insiden Medis Massal</button>
+        <button class="crisis-btn" style="background:linear-gradient(135deg,#1d4ed8,#2563eb);color:#fff;" onclick="triggerCrisis('security')">🔒 Ancaman Keamanan</button>
+        <button class="btn-ok crisis-btn" onclick="triggerCrisis('artist_cancel')">🎤 Artis Batal Tampil</button>
+      </div>
+
+      <hr class="border-gray-800 my-4" />
+      <p class="section-title">📡 Custom Alert</p>
+      <div class="space-y-2">
+        <input id="custom-crisis-input" class="input-dark" placeholder="Deskripsi insiden custom..." />
+        <select id="custom-crisis-level" class="input-dark">
+          <option value="critical">🔴 CRITICAL</option>
+          <option value="high">🟠 HIGH</option>
+          <option value="medium">🟡 MEDIUM</option>
+          <option value="low">🟢 LOW</option>
+        </select>
+        <button class="btn-primary w-full" onclick="triggerCustomCrisis()">🚀 Aktivasi Alert</button>
+      </div>
+    </div>
+
+    <!-- Crisis Response Panel -->
+    <div class="card p-5 lg:col-span-2">
+      <div class="flex items-center justify-between mb-4">
+        <p class="section-title mb-0">🚨 Crisis Response Center</p>
+        <div id="alert-level-badge" class="hidden">
+          <span id="alert-level-text" class="badge text-base px-4 py-1"></span>
+        </div>
+      </div>
+      <div id="crisis-placeholder" class="text-gray-500 text-sm text-center py-12">
+        Tekan salah satu tombol insiden untuk mengaktifkan respons darurat
+      </div>
+      <div id="crisis-response" class="hidden">
+        <div id="crisis-alert-box" class="alert-box mb-4">
+          <div class="flex items-start gap-3">
+            <span id="crisis-icon" class="text-2xl"></span>
+            <div>
+              <h3 id="crisis-title" class="font-bold text-base mb-1"></h3>
+              <p id="crisis-desc" class="text-sm text-gray-300"></p>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2">📋 SOP Darurat Checklist</p>
+            <div id="sop-checklist" class="space-y-1 text-sm"></div>
+          </div>
+          <div>
+            <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2">📞 Kontak Darurat</p>
+            <div id="emergency-contacts" class="space-y-1 text-sm"></div>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2">📝 Draf Rilis Pers Humas Otomatis</p>
+          <div id="pr-draft" class="pr-draft text-gray-300"></div>
+          <button class="btn-primary mt-2 text-sm" onclick="copyPRDraft()">📋 Copy PR Draft</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================= TAB 5: DATABASE ============================= -->
+<div id="tab-database" class="tab-content">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- Save Event Form -->
+    <div class="card p-5">
+      <p class="section-title">💾 Simpan Event Baru</p>
+      <div class="space-y-3">
+        <div><label class="text-xs text-gray-400 mb-1 block">Nama Event</label><input id="db-ev-name" class="input-dark" placeholder="Nama Event" /></div>
+        <div><label class="text-xs text-gray-400 mb-1 block">Tema</label><input id="db-ev-theme" class="input-dark" placeholder="e.g. Cyberpunk Neon" /></div>
+        <div><label class="text-xs text-gray-400 mb-1 block">Venue</label><input id="db-ev-venue" class="input-dark" placeholder="Nama Venue" /></div>
+        <div><label class="text-xs text-gray-400 mb-1 block">Kota</label><input id="db-ev-city" class="input-dark" placeholder="Kota" /></div>
+        <div><label class="text-xs text-gray-400 mb-1 block">Tanggal</label><input id="db-ev-date" class="input-dark" type="date" /></div>
+        <div><label class="text-xs text-gray-400 mb-1 block">Kapasitas</label><input id="db-ev-cap" class="input-dark" type="number" placeholder="Jumlah peserta" /></div>
+        <div><label class="text-xs text-gray-400 mb-1 block">Budget Total (Rp)</label><input id="db-ev-budget" class="input-dark" type="number" placeholder="100000000" /></div>
+        <div><label class="text-xs text-gray-400 mb-1 block">Status</label>
+          <select id="db-ev-status" class="input-dark">
+            <option value="Planning">📋 Planning</option>
+            <option value="Confirmed">✅ Confirmed</option>
+            <option value="Ongoing">🔴 Ongoing</option>
+            <option value="Completed">🏆 Completed</option>
+            <option value="Cancelled">❌ Cancelled</option>
+          </select>
+        </div>
+        <div><label class="text-xs text-gray-400 mb-1 block">Catatan</label><textarea id="db-ev-notes" class="input-dark" rows="3" placeholder="Catatan tambahan..."></textarea></div>
+        <button class="btn-primary w-full" onclick="saveEventRecord()">💾 Simpan ke Database</button>
+      </div>
+    </div>
+
+    <!-- Records List -->
+    <div class="card p-5 lg:col-span-2">
+      <div class="flex items-center justify-between mb-4">
+        <p class="section-title mb-0">🗄️ Event Records</p>
+        <div class="flex gap-2">
+          <button class="btn-primary text-xs px-3 py-2" onclick="exportAllRecords()">🖨️ Cetak Laporan</button>
+          <button class="btn-danger text-xs px-3 py-2" onclick="clearAllRecords()">🗑️ Hapus Semua</button>
+        </div>
+      </div>
+      <div id="db-stats" class="grid grid-cols-3 gap-3 mb-4">
+        <div class="stat-box"><div class="text-xs text-gray-500">Total Event</div><div id="stat-total" class="font-bold text-indigo-300 text-xl">0</div></div>
+        <div class="stat-box"><div class="text-xs text-gray-500">Total Budget</div><div id="stat-budget" class="font-bold text-green-300 text-sm mt-1">Rp 0</div></div>
+        <div class="stat-box"><div class="text-xs text-gray-500">Total Peserta</div><div id="stat-cap" class="font-bold text-yellow-300 text-xl">0</div></div>
+      </div>
+      <div class="db-row db-header">
+        <span>ID</span><span>Event</span><span>Venue</span><span>Tanggal</span><span>Status</span><span>Aksi</span>
+      </div>
+      <div id="db-records-list">
+        <div class="text-center text-gray-500 text-sm py-8">Belum ada event tersimpan</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- Toast Notification -->
+<div id="toast" class="toast hidden">
+  <span id="toast-msg"></span>
+</div>
+
+<!-- =====================================================================
+     Layer 1: Data & Storage — loaded from external file
+     ===================================================================== -->
+<script src="database.js"></script>
+
+<!-- =====================================================================
+     Layer 2: Business Logic & AI Orchestration
+     Layer 3: Presentation Utilities
+     ===================================================================== -->
+<script>
+'use strict';
+
+// ─────────────────────────────────────────────────────────
+// LAYER 2A — Creative Concept Engine
+// ─────────────────────────────────────────────────────────
+
+const THEME_DATA = {
+  cyberpunk: {
+    name: 'Cyberpunk Neon',
+    palette: ['#00FFFF','#FF00FF','#1A1A2E','#16213E','#0F3460'],
+    paletteName: ['Neon Cyan','Neon Magenta','Midnight Black','Navy Dark','Electric Blue'],
+    dresscode: 'Futuristik dengan aksesori LED, jaket kulit hitam, kacamata neon, boots platform. Warna dominan: hitam, ungu, neon cyan.',
+    lighting: ['Laser beam RGB 360°','Strobo effect di beat drop','LED pixel wall backdrop','Underglow UV light di floor','Holographic fog machine'],
+    decoration: ['Neon sign custom tipografi','Panel circuitboard raksasa','Kabel fiber optic berpendar','Drone light show opener','AR/VR experience booth']
+  },
+  tropical: {
+    name: 'Tropical Paradise',
+    palette: ['#FF6B6B','#FFA552','#2ECC71','#1ABC9C','#F1C40F'],
+    paletteName: ['Coral Sunset','Mango Orange','Palm Green','Teal Ocean','Sun Yellow'],
+    dresscode: 'Resort wear colorful, floral prints, straw hat, sandal anyaman. Dilarang all-black outfit. Warna: merah, oranye, hijau tropis.',
+    lighting: ['Warm golden sunset wash','Green nature spotlight','Tropical haze hazers','Lantern string lights','Watercolor gobo projection'],
+    decoration: ['Instalasi pohon palem buatan','Flower wall photo backdrop','Hammock & cabana lounge zone','Buah tropis display giant props','Misting fan dengan aroma kelapa']
+  },
+  royal: {
+    name: 'Royal Elegance',
+    palette: ['#2C1654','#4A0E8F','#D4AF37','#FFFFFF','#8B0000'],
+    paletteName: ['Royal Purple','Deep Violet','Gold Leaf','Ivory White','Crimson Red'],
+    dresscode: 'Formal black tie atau gaun malam. Tuxedo untuk pria, evening gown untuk wanita. Aksesoris emas wajib. Dress code ketat.',
+    lighting: ['Chandelier crystal spotlight','Amber warm wash','Gold pin-spot highlight','Candelabra effect LED','Draping curtain with uplights'],
+    decoration: ['Floral arrangement mawar merah & putih','Throne chair display entrance','Red velvet rope & gold stanchion','Monogram lighting projection','Bouquet centerpiece elaborate']
+  },
+  retro: {
+    name: 'Retro Wave 80s',
+    palette: ['#FF1493','#FF6600','#FFFF00','#00CED1','#8B008B'],
+    paletteName: ['Hot Pink','Sunset Orange','Neon Yellow','Electric Teal','Dark Magenta'],
+    dresscode: 'Jaket denim, legging neon, shoulder pads, sneakers retro, rambut voluminous. Full 80s vibes! Warna bold & clash.',
+    lighting: ['Retro PAR can colorful','Disco mirror ball spinning','VHS scan line projection','Purple & pink wash','Retro neon tube signs'],
+    decoration: ['VHS cassette & vinyl record display','Retro arcade machine props','Polaroid photo wall interactive','Checkerboard floor overlay','Neon sign "TOTALLY AWESOME"']
+  },
+  minimalist: {
+    name: 'Nordic Minimalist',
+    palette: ['#FAFAFA','#E8E8E8','#2D2D2D','#4A90D9','#7EB5A6'],
+    paletteName: ['Pure White','Light Gray','Charcoal','Nordic Blue','Sage Green'],
+    dresscode: 'Monochrome atau earth tone. Linen, wool, cotton natural. Hindari pattern ramai. Warna: putih, krem, abu, hitam, biru muted.',
+    lighting: ['Clean white wash high-key','Cool 5600K daylight LED','Subtle blue accent strip','Architectural uplighting minimalis','Geometric shadow gobo'],
+    decoration: ['Instalasi geometric kayu birch','Floral minimalis single stem','Typography print white-on-white','Concrete & terrazzo props','Hanging pendant lamp natural fiber']
+  },
+  bohemian: {
+    name: 'Bohemian Earth',
+    palette: ['#C4A35A','#8B6F47','#5D4037','#A5D6A7','#FF8A65'],
+    paletteName: ['Golden Sand','Warm Brown','Cocoa Earth','Sage Mint','Terracotta'],
+    dresscode: 'Free-spirited dengan tie-dye, fringe, feather accessories. Maxi dress, sandal kulit, headband bunga. Earthy & natural vibes.',
+    lighting: ['Warm amber wash','Fairy lights string curtain','Lantern & candle effect','Sunset golden hour simulation','Botanical gobo leaf pattern'],
+    decoration: ['Macramé wall hanging besar','Dream catcher installation masif','Kilim & tapestry floor covering','Dried flower arrangement','Wooden crate & barrel furniture']
+  },
+  futuristic: {
+    name: 'Galactic Futuristic',
+    palette: ['#0A0A1A','#1B2FFF','#00E5FF','#9C27B0','#E040FB'],
+    paletteName: ['Space Black','Stellar Blue','Aqua Glow','Galaxy Purple','Cosmic Pink'],
+    dresscode: 'Silver metallic, holographic fabric, LED accessories, visor helmet. Space suit inspired. Warna: silver, biru galaktik, ungu kosmik.',
+    lighting: ['Moving head beam matrix','LED pixel globe sphere','Star field projection ceiling','Plasma UV reactive','Drone show synchronized'],
+    decoration: ['Giant inflatable planet & astronaut','Mirror sphere suspended 3m','LED truss geometric framework','Hologram projection pyramid','Interactive floor LED dance floor']
+  }
+};
+
+function generateConcept() {
+  const name     = document.getElementById('ev-name').value.trim();
+  const theme    = document.getElementById('ev-theme').value;
+  const genre    = document.getElementById('ev-genre').value;
+  const date     = document.getElementById('ev-date').value;
+  const audience = document.getElementById('ev-audience').value.trim();
+
+  if (!theme) { showToast('⚠️ Pilih tema terlebih dahulu!'); return; }
+
+  const td = THEME_DATA[theme];
+
+  // Palette
+  let paletteHTML = '<div class="flex gap-2 flex-wrap mb-3">';
+  td.palette.forEach((c, i) => {
+    paletteHTML += `<div class="flex flex-col items-center gap-1">
+      <div class="swatch" style="background:${c}"></div>
+      <div class="text-xs text-gray-400">${c}</div>
+      <div class="text-xs text-gray-500">${td.paletteName[i]}</div>
+    </div>`;
+  });
+  paletteHTML += '</div>';
+  document.getElementById('palette-output').innerHTML = paletteHTML;
+
+  // Dresscode
+  document.getElementById('dresscode-output').innerHTML =
+    `<div class="text-sm text-gray-300 bg-gray-900 rounded-lg p-3 leading-relaxed">${td.dresscode}</div>`;
+
+  // Lighting & Decoration
+  let lightHTML = '<div class="space-y-2">';
+  td.lighting.forEach(l => {
+    lightHTML += `<div class="flex items-center gap-2 text-sm"><span class="text-yellow-400">💡</span><span class="text-gray-300">${l}</span></div>`;
+  });
+  lightHTML += '</div><hr class="border-gray-800 my-3"/><p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-2">🎪 Dekorasi</p><div class="space-y-2">';
+  td.decoration.forEach(d => {
+    lightHTML += `<div class="flex items-center gap-2 text-sm"><span class="text-purple-400">✦</span><span class="text-gray-300">${d}</span></div>`;
+  });
+  lightHTML += '</div>';
+  document.getElementById('lighting-output').innerHTML = lightHTML;
+
+  // Summary
+  const dateStr = date ? new Date(date).toLocaleDateString('id-ID', {day:'numeric',month:'long',year:'numeric'}) : '—';
+  document.getElementById('concept-summary').innerHTML = `
+    <div class="bg-gray-900 rounded-lg p-3 space-y-1 text-sm">
+      <div><span class="text-gray-500">Event:</span> <span class="text-white font-bold">${name || '—'}</span></div>
+      <div><span class="text-gray-500">Tema:</span> <span class="text-indigo-300">${td.name}</span></div>
+      <div><span class="text-gray-500">Genre:</span> <span class="text-green-300">${genre || '—'}</span></div>
+      <div><span class="text-gray-500">Tanggal:</span> <span>${dateStr}</span></div>
+      <div><span class="text-gray-500">Target:</span> <span>${audience || '—'}</span></div>
+    </div>`;
+
+  showToast('✨ Concept berhasil di-generate!');
+}
+
+// ─────────────────────────────────────────────────────────
+// LAYER 2B — Capacity & Safety Rule Engine
+// ─────────────────────────────────────────────────────────
+
+function checkCapacity() {
+  const target  = parseInt(document.getElementById('venue-target').value) || 0;
+  const venueId = document.getElementById('venue-select').value;
+  const venue   = LS_getAllVenues().find(v => v.id === venueId);
+  const alertEl = document.getElementById('capacity-alert');
+
+  if (!venue || target === 0) { alertEl.innerHTML = ''; return; }
+
+  const ratio = target / venue.kapasitas;
+  if (ratio > 1) {
+    alertEl.innerHTML = `<div class="alert-box alert-red"><div class="flex items-center gap-2"><span class="text-2xl">🚨</span><div>
+      <strong class="text-red-400">OVERCAPACITY WARNING</strong>
+      <div class="text-xs mt-1 text-red-300">Target <strong>${target.toLocaleString()}</strong> melebihi kapasitas resmi <strong>${venue.kapasitas.toLocaleString()}</strong> (${Math.round(ratio*100)}%). Kelebihan: ${(target-venue.kapasitas).toLocaleString()} orang. Risiko: kecelakaan, pelanggaran izin.</div>
+    </div></div></div>`;
+  } else if (ratio > 0.9) {
+    alertEl.innerHTML = `<div class="alert-box alert-yellow"><div class="flex items-center gap-2"><span class="text-2xl">⚠️</span><div>
+      <strong class="text-yellow-400">Near Capacity Warning</strong>
+      <div class="text-xs mt-1 text-yellow-300">Target ${Math.round(ratio*100)}% dari kapasitas. Pertimbangkan manajemen crowd ekstra.</div>
+    </div></div></div>`;
+  } else {
+    alertEl.innerHTML = `<div class="alert-box alert-green"><div class="flex items-center gap-2"><span>✅</span>
+      <div class="text-xs text-green-300">Target aman — ${Math.round(ratio*100)}% dari kapasitas (sisa ${(venue.kapasitas-target).toLocaleString()} slot).</div>
+    </div></div>`;
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+// LAYER 2C — Financial & Budgeting Engine
+// ─────────────────────────────────────────────────────────
+
+function calculateBudget() {
+  const ticketPrice = parseFloat(document.getElementById('b-ticket-price').value) || 0;
+  const vipPrice    = parseFloat(document.getElementById('b-vip-price').value)    || 0;
+  const ticketSold  = parseFloat(document.getElementById('b-ticket-sold').value)  || 0;
+  const vipSold     = parseFloat(document.getElementById('b-vip-sold').value)     || 0;
+  const sponsor     = parseFloat(document.getElementById('b-sponsor').value)      || 0;
+
+  const costs = {
+    'Sewa Venue':       parseFloat(document.getElementById('b-venue-cost').value)    || 0,
+    'Artis/Talent':     parseFloat(document.getElementById('b-artist-cost').value)   || 0,
+    'Sound & Lighting': parseFloat(document.getElementById('b-sound-cost').value)    || 0,
+    'Marketing':        parseFloat(document.getElementById('b-marketing-cost').value)|| 0,
+    'Keamanan':         parseFloat(document.getElementById('b-security-cost').value) || 0,
+    'Operasional Lain': parseFloat(document.getElementById('b-other-cost').value)    || 0,
+  };
+
+  const ticketRevenue = ticketPrice * ticketSold;
+  const vipRevenue    = vipPrice    * vipSold;
+  const grossRevenue  = ticketRevenue + vipRevenue + sponsor;
+  const totalExpense  = Object.values(costs).reduce((a, b) => a + b, 0);
+  const netBalance    = grossRevenue - totalExpense;
+
+  const totalTickets   = ticketSold + vipSold;
+  const avgTicketPrice = totalTickets > 0 ? (ticketRevenue + vipRevenue) / totalTickets : ticketPrice;
+  const bepTickets     = avgTicketPrice > 0 ? Math.ceil((totalExpense - sponsor) / avgTicketPrice) : 0;
+
+  const fmt      = n => 'Rp ' + Math.abs(n).toLocaleString('id-ID');
+  const isProfit = netBalance >= 0;
+
+  let costBreakdownHTML = '';
+  Object.entries(costs).forEach(([k, v]) => {
+    const pct = totalExpense > 0 ? (v / totalExpense * 100).toFixed(1) : 0;
+    costBreakdownHTML += `<div class="flex justify-between text-xs py-1 border-b border-gray-800">
+      <span class="text-gray-400">${k}</span>
+      <span class="text-gray-300">${fmt(v)} <span class="text-gray-600">(${pct}%)</span></span>
+    </div>`;
+  });
+
+  document.getElementById('budget-output').innerHTML = `
+    <div class="grid grid-cols-2 gap-3 mb-4">
+      <div class="stat-box"><div class="text-xs text-gray-500">Gross Revenue</div><div class="font-bold text-green-400 text-sm mt-1">${fmt(grossRevenue)}</div></div>
+      <div class="stat-box"><div class="text-xs text-gray-500">Total Expense</div><div class="font-bold text-red-400 text-sm mt-1">${fmt(totalExpense)}</div></div>
+      <div class="stat-box col-span-2 ${isProfit ? 'border-green-700' : 'border-red-700'}">
+        <div class="text-xs text-gray-500">Net Balance (${isProfit ? 'PROFIT ✅' : 'RUGI ⚠️'})</div>
+        <div class="font-bold text-${isProfit ? 'green' : 'red'}-400 text-lg mt-1">${isProfit ? '+' : '-'}${fmt(netBalance)}</div>
+      </div>
+    </div>
+    <div class="stat-box mb-4">
+      <div class="text-xs text-gray-500">Break-Even Point</div>
+      <div class="font-bold text-indigo-300 text-lg mt-1">${bepTickets.toLocaleString()} tiket</div>
+      <div class="text-xs text-gray-500">pada harga rata-rata ${fmt(avgTicketPrice)}/tiket</div>
+    </div>
+    <div class="mb-2 text-xs text-gray-400 font-bold uppercase tracking-widest">Rincian Pengeluaran</div>
+    ${costBreakdownHTML}
+    <div class="mt-3 p-3 rounded-lg ${isProfit ? 'bg-green-900/30 border border-green-700' : 'bg-red-900/30 border border-red-700'}">
+      <div class="text-sm font-bold ${isProfit ? 'text-green-400' : 'text-red-400'}">
+        ${isProfit ? '🎉 Event ini diproyeksikan PROFIT!' : '⚠️ Event ini diproyeksikan MERUGI!'}
+      </div>
+      <div class="text-xs text-gray-400 mt-1">
+        ${isProfit
+          ? `Keuntungan bersih: ${fmt(netBalance)} — ROI: ${totalExpense > 0 ? (netBalance/totalExpense*100).toFixed(1) : 0}%`
+          : `Kerugian bersih: ${fmt(netBalance)} — Butuh ${bepTickets.toLocaleString()} tiket terjual untuk BEP`}
+      </div>
+    </div>`;
+
+  document.getElementById('bep-section').classList.remove('hidden');
+  drawBEPChart(bepTickets, totalTickets, avgTicketPrice, totalExpense, sponsor);
+  showToast('📊 Kalkulasi finansial selesai!');
+}
+
+function drawBEPChart(bepTickets, actualSold, avgPrice, totalExpense, sponsor) {
+  const canvas   = document.getElementById('bep-chart');
+  const maxTix   = Math.max(bepTickets * 1.5, actualSold * 1.2, 100);
+  const steps    = 8;
+  const stepSize = Math.ceil(maxTix / steps);
+  const W = 560, H = 140, PL = 60, PR = 20, PT = 15, PB = 35;
+  const cW = W - PL - PR, cH = H - PT - PB;
+
+  let points = [];
+  for (let i = 0; i <= steps; i++) {
+    const t = i * stepSize;
+    points.push({ t, profit: t * avgPrice + sponsor - totalExpense });
+  }
+
+  const maxP = Math.max(...points.map(p => p.profit));
+  const minP = Math.min(...points.map(p => p.profit));
+  const range = maxP - minP || 1;
+  const xS = t => PL + (t / (steps * stepSize)) * cW;
+  const yS = p => PT + cH - ((p - minP) / range) * cH;
+  const zeroY = yS(0);
+  const polyline = points.map(p => `${xS(p.t)},${yS(p.profit)}`).join(' ');
+  const bepX = PL + (bepTickets / (steps * stepSize)) * cW;
+  const actX = PL + (actualSold / (steps * stepSize)) * cW;
+
+  canvas.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="100%" style="background:#0d1117;border-radius:8px;border:1px solid #1f2937">
+    <text x="6" y="14" font-size="9" fill="#6b7280">Profit/Rugi</text>
+    <line x1="${PL}" y1="${PT}" x2="${PL}" y2="${PT+cH}" stroke="#374151" stroke-width="1"/>
+    <line x1="${PL}" y1="${PT+cH}" x2="${PL+cW}" y2="${PT+cH}" stroke="#374151" stroke-width="1"/>
+    <line x1="${PL}" y1="${zeroY}" x2="${PL+cW}" y2="${zeroY}" stroke="#4ade80" stroke-width="1" stroke-dasharray="4 3" opacity="0.5"/>
+    <text x="${PL-4}" y="${zeroY+4}" text-anchor="end" font-size="8" fill="#4ade80">0</text>
+    <polyline points="${polyline}" fill="none" stroke="#818cf8" stroke-width="2"/>
+    <line x1="${bepX}" y1="${PT}" x2="${bepX}" y2="${PT+cH}" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="${bepX}" y="${PT-2}" text-anchor="middle" font-size="9" fill="#f59e0b">BEP: ${bepTickets.toLocaleString()}</text>
+    ${actualSold > 0 ? `<line x1="${actX}" y1="${PT}" x2="${actX}" y2="${PT+cH}" stroke="${actualSold>=bepTickets?'#4ade80':'#ef4444'}" stroke-width="1.5" stroke-dasharray="3 2"/>
+    <text x="${actX}" y="${PT+cH+12}" text-anchor="middle" font-size="8" fill="${actualSold>=bepTickets?'#4ade80':'#ef4444'}">Aktual: ${actualSold.toLocaleString()}</text>` : ''}
+    ${points.map((p,i) => i%2===0 ? `<text x="${xS(p.t)}" y="${PT+cH+12}" text-anchor="middle" font-size="7" fill="#6b7280">${p.t.toLocaleString()}</text>` : '').join('')}
+    <text x="${W-PR}" y="${PT+cH+12}" text-anchor="end" font-size="8" fill="#6b7280">→ Tiket Terjual</text>
+  </svg>`;
+}
+
+// ─────────────────────────────────────────────────────────
+// LAYER 2D — Crisis Decision & PR Response Engine
+// ─────────────────────────────────────────────────────────
+
+const CRISIS_DATA = {
+  crowd_crush: {
+    level:'critical', icon:'💥', color:'alert-red',
+    title:'CROWD CRUSH — Desakan Massa Kritis',
+    desc:'Terdeteksi tekanan massa berlebih di zona crowd. Risiko cedera massal tinggi. Aktivasi protokol evakuasi segera.',
+    sop:['Hentikan pertunjukan SEGERA — matikan musik','Nyalakan lampu venue penuh','Announcer umumkan evakuasi tenang via mic','Buka SEMUA gate evakuasi & pintu darurat','Arahkan massa ke assembly point','Hubungi 119 / BPBD','Blokir akses penonton baru masuk','Dokumentasi insiden untuk legal','Koordinasi dengan polisi setempat'],
+    contacts:['🚑 Emergency: 119','👮 Polisi: 110','🔥 Damkar: 113','📟 Event Director: ext. 100','🏥 Pos Medis A: Radio Ch.1','🏥 Pos Medis B: Radio Ch.2'],
+    pr:(ev)=>`SIARAN PERS — INSIDEN KEAMANAN EVENT\n\n${ev}\n${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}\n\nKepada Yth. Media dan Seluruh Pihak Terkait,\n\nSehubungan dengan insiden desakan massa yang terjadi pada penyelenggaraan ${ev||'acara kami'}, kami menyampaikan pernyataan resmi sebagai berikut:\n\n1. Kami telah mengaktifkan protokol darurat standar internasional secara penuh.\n2. Tim medis on-site segera memberikan pertolongan pertama kepada pihak yang membutuhkan.\n3. Koordinasi dengan pihak berwajib (Polri, BPBD, Dinkes) telah dilakukan.\n4. Venue telah dievakuasi secara tertib dan terkendali.\n\nKeselamatan pengunjung adalah prioritas utama kami. Investigasi internal sedang berjalan. Kami berkomitmen untuk memberikan transparansi penuh kepada publik.\n\nUpdate berikutnya akan disampaikan dalam 2 jam.\n\nHormat kami,\nTim Management EventVerse AI`
+  },
+  fire: {
+    level:'critical', icon:'🔥', color:'alert-red',
+    title:'KEBAKARAN — Fire Emergency Protocol',
+    desc:'Terdeteksi titik api / asap di area venue. Evakuasi total diperlukan segera.',
+    sop:['Aktifkan alarm kebakaran venue','Hubungi 113 (Pemadam Kebakaran) SEGERA','Hentikan seluruh pertunjukan & matikan listrik non-esensial','Arahkan evakuasi via jalur bebas asap','Jangan gunakan lift / elevator','Tim keamanan kawal evakuasi berurutan','Lakukan head count di assembly point','DILARANG kembali ke area venue','Sediakan akses untuk unit damkar'],
+    contacts:['🔥 Damkar: 113','🚑 Emergency: 119','👮 Polisi: 110','⚡ PLN Emergency: 123','📟 Chief Security: Radio Ch.3'],
+    pr:(ev)=>`SIARAN PERS — INSIDEN KEBAKARAN\n\n${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}\n\nSehubungan dengan insiden kebakaran di area ${ev||'penyelenggaraan event'}, kami menyampaikan:\n\n1. Insiden terjadi dan tim darurat langsung diaktifkan.\n2. Unit Pemadam Kebakaran telah dihubungi dan tiba di lokasi.\n3. Evakuasi total pengunjung dilakukan dengan tertib tanpa korban jiwa.\n4. Penyelidikan penyebab kebakaran sedang dilakukan bersama pihak berwajib.\n\nKami minta maaf atas ketidaknyamanan ini dan berterima kasih atas ketenangan pengunjung.\n\nHormat kami,\nManagement EventVerse AI`
+  },
+  power_outage: {
+    level:'high', icon:'⚡', color:'alert-yellow',
+    title:'POWER OUTAGE — Pemadaman Listrik Total',
+    desc:'Seluruh sistem kelistrikan venue mengalami kegagalan. Backup generator perlu diaktifkan.',
+    sop:['Aktifkan genset/UPS backup dalam 30 detik','Pastikan lampu emergency/emergency exit menyala','Batasi pergerakan massa — tunggu kondisi stabil','Hubungi PLN Emergency: 123','Teknisi sound/lighting assess kerusakan equipment','Umumkan situasi via megafon/battery speaker','Estimasi waktu perbaikan kepada penonton','Siapkan skenario cancel/reschedule jika >30 menit'],
+    contacts:['⚡ PLN Emergency: 123','🔧 Head Technician: Radio Ch.4','📟 Event Director: ext. 100','🎤 Stage Manager: Radio Ch.5'],
+    pr:(ev)=>`PENGUMUMAN — GANGGUAN KELISTRIKAN\n\n${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}\n\nKepada pengunjung yang terhormat,\n\nKami mohon maaf atas gangguan kelistrikan yang terjadi pada ${ev||'acara kami'}. Tim teknisi kami sedang bekerja keras untuk memulihkan sistem dalam waktu sesingkat mungkin.\n\nSituasi terkendali dan tidak ada bahaya. Harap tetap di tempat dan menunggu instruksi selanjutnya dari panitia.\n\nEstimasi pemulihan: ± 30 menit.\n\nTerima kasih atas pengertian Anda.\n\nManagement EventVerse AI`
+  },
+  storm: {
+    level:'high', icon:'🌧️', color:'alert-yellow',
+    title:'CUACA EKSTREM — Storm Alert Protocol',
+    desc:'BMKG mengeluarkan peringatan cuaca ekstrem. Angin kencang dan hujan lebat diperkirakan.',
+    sop:['Monitor update BMKG real-time','Evakuasi area outdoor ke shelter indoor','Amankan peralatan sound/lighting dari air','Matikan instalasi listrik outdoor','Lepaskan banner/backdrop sementara','Tunda pertunjukan outdoor sementara','Komunikasikan update 15 menit sekali kepada penonton','Koordinasi dengan BPBD setempat','Siapkan tenda/shelter tambahan'],
+    contacts:['🌧️ BMKG: 021-4246321','🏛️ BPBD Lokal: 119','🎭 Stage Manager: Radio Ch.5','🔧 Head Technician: Radio Ch.4'],
+    pr:(ev)=>`PEMBERITAHUAN CUACA — PENUNDAAN SEMENTARA\n\n${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}\n\nKami memberitahukan bahwa ${ev||'pertunjukan'} terpaksa kami tunda sementara karena kondisi cuaca ekstrem berdasarkan peringatan resmi BMKG.\n\nKeselamatan pengunjung adalah prioritas kami. Area outdoor telah diamankan dan pengunjung diarahkan ke zona shelter yang telah disiapkan.\n\nPertunjukan akan dilanjutkan segera setelah kondisi cuaca memungkinkan. Mohon bersabar dan ikuti arahan petugas.\n\nManagement EventVerse AI`
+  },
+  medical: {
+    level:'high', icon:'🏥', color:'alert-yellow',
+    title:'INSIDEN MEDIS MASSAL — MCI Protocol',
+    desc:'Multiple korban membutuhkan pertolongan medis simultan. Mass Casualty Incident diaktifkan.',
+    sop:['Aktifkan semua pos medis on-site','Hubungi 119 untuk backup ambulans','Triage korban: merah (kritis), kuning (sedang), hijau (ringan)','Siapkan area evakuasi medis khusus','Hubungi RS terdekat untuk koordinasi penerimaan','Catat identitas korban & kronologi','Batasi akses media ke area medis','Designasi spokesperson untuk media','Dokumentasi foto/video untuk keperluan legal'],
+    contacts:['🚑 Emergency: 119','🏥 RS Terdekat: cek peta lokal','👮 Polisi: 110','📟 Chief Medic: Radio Ch.6','📟 Event Director: ext. 100'],
+    pr:(ev)=>`SIARAN PERS — INSIDEN MEDIS\n\n${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}\n\nTim kami telah mengaktifkan protokol medis darurat pada ${ev||'penyelenggaraan event kami'}.\n\nTim medis on-site telah memberikan pertolongan pertama kepada pengunjung yang membutuhkan. Ambulans dan pihak RS terkait telah dikoordinasikan.\n\nKami berkomitmen penuh untuk transparansi. Update lengkap akan diberikan segera setelah situasi stabil.\n\nHormat kami,\nManagement EventVerse AI`
+  },
+  security: {
+    level:'critical', icon:'🔒', color:'alert-red',
+    title:'ANCAMAN KEAMANAN — Security Alert',
+    desc:'Teridentifikasi ancaman atau perilaku mencurigakan yang membahayakan keselamatan publik.',
+    sop:['Hubungi Polisi 110 SEGERA','Jangan konfrontasi pelaku secara langsung','Aktifkan silent evacuation protocol','Lockdown area yang terdampak','Amankan dokumentasi CCTV','Koordinasi dengan Polri untuk area clear','Evakuasi pengunjung via rute aman','Jaga ketenangan — hindari kepanikan massal','Tunggu ALL-CLEAR dari Polri sebelum lanjut'],
+    contacts:['👮 Polisi: 110','🚔 Polsek Setempat: cek lokal','🔒 Chief Security: Radio Ch.3','📟 Event Director: ext. 100'],
+    pr:(ev)=>`PERNYATAAN RESMI — INSIDEN KEAMANAN\n\n${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}\n\nKami mengkonfirmasi adanya insiden keamanan pada ${ev||'acara kami'} dan telah segera berkoordinasi dengan pihak Kepolisian.\n\nDemi keselamatan seluruh pihak, event dihentikan sementara. Kami sepenuhnya kooperatif dengan pihak berwajib dalam penanganan insiden ini.\n\nTidak ada keterangan tambahan yang bisa diberikan sebelum proses investigasi selesai.\n\nManagement EventVerse AI`
+  },
+  artist_cancel: {
+    level:'medium', icon:'🎤', color:'alert-blue',
+    title:'ARTIS BATAL TAMPIL — Show Contingency',
+    desc:'Artis/performer utama membatalkan penampilan mendadak. Diperlukan manajemen ekspektasi penonton.',
+    sop:['Hubungi tim manajemen artis untuk konfirmasi','Assess kemungkinan replacement/penundaan','Siapkan announcer untuk pemberitahuan penonton','Review klausul kontrak force majeure','Hitung kewajiban refund tiket','Koordinasi dengan divisi legal','Update semua platform media sosial resmi','Siapkan kompensasi/hiburan pengganti sementara','Dokumentasi seluruh komunikasi tertulis'],
+    contacts:['📋 Legal Counsel: ext. 200','💼 Artist Management: kontrak terlampir','📲 Social Media Manager: ext. 300','📟 Event Director: ext. 100'],
+    pr:(ev)=>`PENGUMUMAN PENTING UNTUK PENGUNJUNG\n\n${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}\n\nKepada pengunjung yang terhormat,\n\nDengan penuh penyesalan kami memberitahukan bahwa artis utama pada ${ev||'acara kami'} tidak dapat hadir karena alasan yang berada di luar kendali kami.\n\nSebagai bentuk tanggung jawab kami:\n- Proses refund tiket akan dibuka mulai besok\n- Alternatif penampilan sedang kami koordinasikan\n- Kompensasi berupa voucher senilai 150% harga tiket tersedia\n\nKami sangat memohon maaf atas kekecewaan ini. Terima kasih atas pengertian dan dukungan Anda.\n\nHormat kami,\nManagement EventVerse AI`
+  }
+};
+
+function triggerCrisis(type) {
+  const evName = document.getElementById('db-ev-name').value || document.getElementById('ev-name').value || 'Event Anda';
+  renderCrisis(CRISIS_DATA[type], evName);
+}
+
+function triggerCustomCrisis() {
+  const desc  = document.getElementById('custom-crisis-input').value.trim();
+  const level = document.getElementById('custom-crisis-level').value;
+  if (!desc) { showToast('⚠️ Isi deskripsi insiden!'); return; }
+
+  const colorMap = { critical:'alert-red', high:'alert-yellow', medium:'alert-blue', low:'alert-green' };
+  const iconMap  = { critical:'🚨', high:'⚠️', medium:'ℹ️', low:'✅' };
+  renderCrisis({
+    level, icon: iconMap[level], color: colorMap[level],
+    title: `CUSTOM ALERT — ${desc.toUpperCase()}`,
+    desc,
+    sop: ['Assess situasi secara menyeluruh','Komunikasikan kepada tim manajemen','Dokumentasikan insiden','Terapkan protokol yang relevan','Update semua pihak terkait'],
+    contacts: ['📟 Event Director: ext. 100','👮 Polisi: 110','🚑 Emergency: 119'],
+    pr: (ev) => `PERNYATAAN RESMI\n\n${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}\n\nTim ${ev||'EventVerse AI'} sedang menangani: ${desc}\n\nKami memastikan situasi ditangani secara profesional dan bertanggung jawab. Update lebih lanjut akan diberikan segera.\n\nManagement EventVerse AI`
+  }, document.getElementById('ev-name').value || 'Event Anda');
+}
+
+function renderCrisis(d, evName) {
+  document.getElementById('crisis-placeholder').classList.add('hidden');
+  document.getElementById('crisis-response').classList.remove('hidden');
+
+  const alertBox = document.getElementById('crisis-alert-box');
+  alertBox.className = `alert-box mb-4 ${d.color}`;
+  document.getElementById('crisis-icon').textContent  = d.icon;
+  document.getElementById('crisis-title').textContent = d.title;
+  document.getElementById('crisis-desc').textContent  = d.desc;
+
+  const txt = document.getElementById('alert-level-text');
+  const badgeColors = { critical:'bg-red-600', high:'bg-orange-500', medium:'bg-blue-600', low:'bg-green-600' };
+  txt.className = `badge text-sm px-3 py-1 ${badgeColors[d.level]||'bg-gray-600'} text-white`;
+  txt.textContent = d.level.toUpperCase();
+  document.getElementById('alert-level-badge').classList.remove('hidden');
+
+  document.getElementById('sop-checklist').innerHTML =
+    d.sop.map((s,i) => `<div class="checklist-item"><input type="checkbox" id="sop-${i}"/><label for="sop-${i}" class="text-gray-300 text-xs cursor-pointer">${i+1}. ${s}</label></div>`).join('');
+
+  document.getElementById('emergency-contacts').innerHTML =
+    d.contacts.map(c => `<div class="flex items-center gap-2 py-1 text-xs text-gray-300 border-b border-gray-800">${c}</div>`).join('');
+
+  document.getElementById('pr-draft').textContent = d.pr(evName);
+  showToast(`🚨 Alert ${d.level.toUpperCase()} diaktifkan!`);
+}
+
+function copyPRDraft() {
+  const text = document.getElementById('pr-draft').textContent;
+  navigator.clipboard.writeText(text)
+    .then(() => showToast('📋 PR Draft disalin!'))
+    .catch(() => showToast('❌ Copy gagal'));
+}
+
+// ─────────────────────────────────────────────────────────
+// LAYER 3 — Presentation Utilities
+// ─────────────────────────────────────────────────────────
+
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tabId).classList.add('active');
+  btn.classList.add('active');
+  if (tabId === 'venue')    renderVenueTable();
+  if (tabId === 'database') renderDBRecords();
+}
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.remove('hidden');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.add('hidden'), 3000);
+}
+
+function filterVenuesByCity() {
+  const city = document.getElementById('venue-city').value;
+  const sel  = document.getElementById('venue-select');
+  sel.innerHTML = '<option value="">-- Pilih Venue --</option>';
+  LS_getAllVenues()
+    .filter(v => !city || v.kota === city)
+    .forEach(v => {
+      const o = document.createElement('option');
+      o.value = v.id;
+      o.textContent = `${v.nama} (${v.kapasitas.toLocaleString()})`;
+      sel.appendChild(o);
+    });
+}
+
+function loadVenueDetails() {
+  const id   = document.getElementById('venue-select').value;
+  const v    = LS_getAllVenues().find(x => x.id === id);
+  const card = document.getElementById('venue-info-card');
+  if (!v) { card.classList.add('hidden'); return; }
+  card.classList.remove('hidden');
+  document.getElementById('vi-name').textContent = v.nama;
+  document.getElementById('vi-city').textContent = v.kota;
+  document.getElementById('vi-cap').textContent  = v.kapasitas.toLocaleString();
+  document.getElementById('vi-cat').innerHTML    = `<span class="badge badge-${v.kategori==='indoor'?'indoor':v.kategori==='outdoor'?'outdoor':'semi'}">${v.kategori}</span>`;
+  document.getElementById('bp-capacity-text').textContent = `${v.nama} — Cap: ${v.kapasitas.toLocaleString()}`;
+  checkCapacity();
+}
+
+function addCustomVenue() {
+  const nama = document.getElementById('new-venue-name').value.trim();
+  const kota = document.getElementById('new-venue-city').value.trim();
+  const kap  = parseInt(document.getElementById('new-venue-cap').value) || 0;
+  const kat  = document.getElementById('new-venue-cat').value;
+  if (!nama || !kota || kap <= 0) { showToast('⚠️ Lengkapi data venue!'); return; }
+  LS_saveVenue({ id: 'vc' + Date.now(), nama, kota, kapasitas: kap, kategori: kat });
+  document.getElementById('new-venue-name').value = '';
+  document.getElementById('new-venue-city').value = '';
+  document.getElementById('new-venue-cap').value  = '';
+  filterVenuesByCity();
+  renderVenueTable();
+  showToast(`✅ Venue "${nama}" disimpan!`);
+}
+
+function renderVenueTable() {
+  document.getElementById('venue-list-table').innerHTML =
+    LS_getAllVenues().map(v => {
+      const isCustom = v.id.startsWith('vc');
+      return `<div class="db-row">
+        <span class="text-gray-500 text-xs">${v.id}</span>
+        <span class="font-semibold text-sm">${v.nama}</span>
+        <span class="text-gray-400 text-xs">${v.kota}</span>
+        <span class="text-green-400 font-bold text-xs">${v.kapasitas.toLocaleString()}</span>
+        <span><span class="badge badge-${v.kategori==='indoor'?'indoor':v.kategori==='outdoor'?'outdoor':'semi'}">${v.kategori}</span></span>
+        <span>${isCustom ? `<button class="btn-danger text-xs px-2 py-1" onclick="deleteVenue('${v.id}')">🗑️</button>` : '<span class="text-gray-600 text-xs">default</span>'}</span>
+      </div>`;
+    }).join('');
+}
+
+function deleteVenue(id) {
+  LS_deleteCustomVenue(id);
+  filterVenuesByCity();
+  renderVenueTable();
+  showToast('🗑️ Venue dihapus');
+}
+
+function saveEventRecord() {
+  const name = document.getElementById('db-ev-name').value.trim();
+  if (!name) { showToast('⚠️ Nama event wajib diisi!'); return; }
+  LS_saveEvent({
+    id:       'ev' + Date.now(),
+    name,
+    theme:    document.getElementById('db-ev-theme').value,
+    venue:    document.getElementById('db-ev-venue').value,
+    city:     document.getElementById('db-ev-city').value,
+    date:     document.getElementById('db-ev-date').value,
+    capacity: document.getElementById('db-ev-cap').value,
+    budget:   document.getElementById('db-ev-budget').value,
+    status:   document.getElementById('db-ev-status').value,
+    notes:    document.getElementById('db-ev-notes').value,
+    savedAt:  new Date().toISOString()
+  });
+  renderDBRecords();
+  showToast(`✅ Event "${name}" disimpan ke database!`);
+  ['db-ev-name','db-ev-theme','db-ev-venue','db-ev-city','db-ev-date','db-ev-cap','db-ev-budget','db-ev-notes']
+    .forEach(id => { document.getElementById(id).value = ''; });
+}
+
+function renderDBRecords() {
+  const events = LS_getAllEvents();
+  const statusIcon = { Planning:'📋', Confirmed:'✅', Ongoing:'🔴', Completed:'🏆', Cancelled:'❌' };
+
+  document.getElementById('db-records-list').innerHTML = events.length === 0
+    ? '<div class="text-center text-gray-500 text-sm py-8">Belum ada event tersimpan</div>'
+    : events.map(ev => {
+        const dateStr = ev.date ? new Date(ev.date).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}) : '—';
+        return `<div class="db-row">
+          <span class="text-gray-500 text-xs">${ev.id.slice(-6)}</span>
+          <div><div class="font-semibold text-sm">${ev.name}</div><div class="text-xs text-gray-500">${ev.theme||'—'}</div></div>
+          <div><div class="text-xs">${ev.venue||'—'}</div><div class="text-xs text-gray-500">${ev.city||''}</div></div>
+          <span class="text-xs text-gray-400">${dateStr}</span>
+          <span class="text-xs">${statusIcon[ev.status]||''} ${ev.status}</span>
+          <button class="btn-danger text-xs px-2 py-1" onclick="deleteRecord('${ev.id}')">🗑️</button>
+        </div>`;
+      }).join('');
+
+  // Stats (reuse helper from database.js)
+  const stats = DB_getStats();
+  document.getElementById('stat-total').textContent  = stats.totalEvents;
+  document.getElementById('stat-budget').textContent = 'Rp ' + stats.totalBudget.toLocaleString('id-ID');
+  document.getElementById('stat-cap').textContent    = stats.totalCapacity.toLocaleString('id-ID');
+}
+
+function deleteRecord(id) {
+  LS_deleteEvent(id);
+  renderDBRecords();
+  showToast('🗑️ Record dihapus');
+}
+
+function clearAllRecords() {
+  if (!confirm('Hapus semua event records? Tindakan ini tidak dapat dibatalkan.')) return;
+  LS_clearEvents();
+  renderDBRecords();
+  showToast('🗑️ Semua records dihapus');
+}
+
+function exportAllRecords() {
+  const events = LS_getAllEvents();
+  if (events.length === 0) { showToast('⚠️ Tidak ada record untuk dicetak'); return; }
+
+  const rows = events.map(ev => `<tr>
+    <td>${ev.id.slice(-6)}</td>
+    <td><strong>${ev.name}</strong><br><small>${ev.theme||''}</small></td>
+    <td>${ev.venue||'—'}<br><small>${ev.city||''}</small></td>
+    <td>${ev.date ? new Date(ev.date).toLocaleDateString('id-ID') : '—'}</td>
+    <td>${ev.status}</td>
+    <td>${ev.capacity ? parseInt(ev.capacity).toLocaleString('id-ID') : '—'}</td>
+    <td>${ev.budget ? 'Rp ' + parseFloat(ev.budget).toLocaleString('id-ID') : '—'}</td>
+  </tr>`).join('');
+
+  const printWin = window.open('', '_blank', 'width=800,height=600');
+  const printHTML = [
+    '<!DOCTYPE html><html><head><title>EventVerse AI \u2014 Laporan Event<\/title>',
+    '<style>',
+    'body{font-family:Arial,sans-serif;padding:24px;color:#111}',
+    'h1{font-size:20px;margin-bottom:4px}h2{font-size:13px;color:#555;margin-top:0}',
+    'table{width:100%;border-collapse:collapse;margin-top:16px;font-size:12px}',
+    'th{background:#1a1a2e;color:#fff;padding:8px;text-align:left}',
+    'td{padding:8px;border-bottom:1px solid #ddd;vertical-align:top}',
+    'tr:nth-child(even){background:#f9f9f9}',
+    '.footer{margin-top:20px;font-size:11px;color:#888;text-align:center}',
+    '<\/style><\/head><body>',
+    '<h1>\uD83D\uDCCA EventVerse AI \u2014 Laporan Event Records<\/h1>',
+    '<h2>Dicetak pada: ' + new Date().toLocaleString('id-ID') + ' | Total: ' + events.length + ' event<\/h2>',
+    '<table><thead><tr><th>#ID<\/th><th>Event<\/th><th>Venue<\/th><th>Tanggal<\/th><th>Status<\/th><th>Kapasitas<\/th><th>Budget<\/th><\/tr><\/thead>',
+    '<tbody>' + rows + '<\/tbody><\/table>',
+    '<div class="footer">EventVerse AI \u2014 Enterprise Event Command Center &copy; 2026<\/div>',
+    '<\/body><\/html>'
+  ].join('');
+  printWin.document.write(printHTML);
+  printWin.document.close();
+  printWin.focus();
+  setTimeout(() => printWin.print(), 500);
+}
+
+// ─────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────
+(function init() {
+  filterVenuesByCity();
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('ev-date').value    = today;
+  document.getElementById('db-ev-date').value = today;
+})();
+</script>
+
+<footer style="text-align:center;margin-top:40px;padding:20px 0 32px;border-top:1px solid #1f2937;color:#57606a;font-size:12px;">
+  Made with <span style="color:#6366f1">IBM Bob</span> — EventVerse AI &copy; 2026
+</footer>
+
+</body>
+</html>
